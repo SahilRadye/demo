@@ -1,0 +1,71 @@
+﻿<Window x:Class="WPF_DB_WGS.Category_CRUD_Form"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_DB_WGS"
+        mc:Ignorable="d"
+        Title="Category_CRUD_Form" Height="450" Width="800" WindowState="Maximized">
+
+
+    <Grid Name="MainLoaded" Loaded="MianLoaded_Loaded">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Category Data" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <!--Inline Style-->
+            <TextBlock.Style>
+                <Style>
+                    <Setter Property="TextBlock.Foreground" Value="DarkBlue"/>
+                    <Setter Property="TextBlock.FontSize" Value="40"/>
+                    <Setter Property="TextBlock.FontWeight" Value="DemiBold"/>
+                    <Setter Property="TextBlock.FontFamily" Value="Pristina"/>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="7*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Content="CategoryId"/>
+            <Label Grid.Row="1" Grid.Column="0" Content="CategoryName"/>
+
+            <TextBox Grid.Row="0" Grid.Column="1" Name="txtCategoryId" Text="{Binding CategoryId}"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Name="txtCategoryName" Text="{Binding CategoryName}"/>
+
+        </Grid>
+
+        <ListBox Grid.Row="2" Name="lstCategory" ItemsSource="{Binding}" IsSynchronizedWithCurrentItem="True" SelectionChanged="lstProducts_SelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Width="100" Text="{Binding CategoryId}"/>
+                        <TextBlock Width="100" Text="{Binding CategoryName}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Name="btnAdd" Content="_Add" Click="btnAdd_Click"/>
+            <Button Name="btnSave" Content="_Save" Click="btnSave_Click"/>
+            <Button Name="btnEdit" Content="_Edit" Click="btnEdit_Click"/>
+            <Button Name="btnDelete" Content="_Delete" Click="btnDelete_Click"/>
+            <Button Name="btnCancel" Content="Cancel" Click="btnCancel_Click"/>
+            <Button Name="btnExit" Content="Exit"/>
+        </StackPanel>
+
+    </Grid>
+</Window>

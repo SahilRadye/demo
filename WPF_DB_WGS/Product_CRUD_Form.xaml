@@ -1,0 +1,99 @@
+﻿<Window x:Class="WPF_DB_WGS.Product_CRUD_Form"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_DB_WGS"
+        mc:Ignorable="d"
+        Title="Product_CRUD_Form" Height="450" Width="800" WindowState="Maximized">
+    <Window.Resources>
+        <local:ConditionalFormat x:Key="priceConverter"/>
+
+        <Style TargetType="StackPanel" x:Key="conditionalFormatStyle">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Price , Converter={StaticResource priceConverter}}" Value="2">  <!--True-->
+                    <Setter Property="StackPanel.Background" Value="Pink"/>
+                </DataTrigger>
+
+                <DataTrigger Binding="{Binding Price , Converter={StaticResource priceConverter}}" Value="1"> <!--False-->
+                    <!--True-->
+                    <Setter Property="StackPanel.Background" Value="LightSkyBlue"/>
+                </DataTrigger>
+
+                <DataTrigger Binding="{Binding Price , Converter={StaticResource priceConverter}}" Value="0">  <!--Null-->
+                    <!--True-->
+                    <Setter Property="StackPanel.Background" Value="White"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+
+    <Grid Name="MainLoaded" Loaded="MainLoaded_Loaded">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Product Data" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <!--Inline Style-->
+            <TextBlock.Style>
+                <Style>
+                    <Setter Property="TextBlock.Foreground" Value="DarkBlue"/>
+                    <Setter Property="TextBlock.FontSize" Value="40"/>
+                    <Setter Property="TextBlock.FontWeight" Value="DemiBold"/>
+                    <Setter Property="TextBlock.FontFamily" Value="Pristina"/>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="7*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Content="ProductId"/>
+            <Label Grid.Row="1" Grid.Column="0" Content="ProductName"/>
+            <Label Grid.Row="2" Grid.Column="0" Content="MfgDate"/>
+            <Label Grid.Row="3" Grid.Column="0" Content="Price"/>
+
+            <TextBox Grid.Row="0" Grid.Column="1" Name="txtProductId" Text="{Binding ProductId}"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Name="txtProductName" Text="{Binding ProductName}"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Name="txtMfgDate" Text="{Binding MfgDate}"/>
+            <TextBox Grid.Row="3" Grid.Column="1" Name="txtPrice" Text="{Binding Price}"/>
+        </Grid>
+
+        <ListBox Grid.Row="2" Name="lstProducts" ItemsSource="{Binding}" SelectionChanged="lstProducts_SelectionChanged" IsSynchronizedWithCurrentItem="True">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Style="{StaticResource conditionalFormatStyle}">
+                        <TextBlock Width="100" Text="{Binding ProductId}"/>
+                        <TextBlock Width="100" Text="{Binding ProductName}"/>
+                        <TextBlock Width="200" Text="{Binding MfgDate}"/>
+                        <TextBlock Width="100" Text="{Binding Price}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Name="btnAdd" Content="_Add" Click="btnAdd_Click"/>
+            <Button Name="btnSave" Content="_Save" Click="btnSave_Click"/>
+            <Button Name="btnEdit" Content="_Edit" Click="btnEdit_Click"/>
+            <Button Name="btnDelete" Content="_Delete" Click="btnDelete_Click"/>
+            <Button Name="btnCancel" Content="Cancel" Click="btnCancel_Click"/>
+            <Button Name="btnExit" Content="Exit"/>
+        </StackPanel>
+
+    </Grid>
+</Window>
